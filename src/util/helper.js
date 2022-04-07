@@ -1,18 +1,16 @@
 
-var today = new Date();
 
- var month = today.getMonth()+1;
- let fun1= function(){
-           console.log(module)
-           console.log( "current month is "+ month);
+let fun1 =  function(){
+  var today = new Date();
+        console.log( "current month is "+ today.getMonth()+1);
  }
- var date = today.getDate();
+ 
  let fun2 =  function(){
-          console.log(module)
-          console.log("curent date is "+ date);
+  var today = new Date();
+          console.log("curent date is "+today.getDate());
           }
  let fun3 = function(){
-            console.log(module)
+            
             console.log("Uranium, W3D3, the topic for today is Nodejs module system")
         }
 

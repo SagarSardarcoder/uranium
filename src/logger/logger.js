@@ -1,6 +1,6 @@
 
 let output = function(){
     console.log(module)
-    console.log("Welcome to my application. I am sagar sardar and a part of FunctionUp Thorium cohort.")
+    console.log("Welcome to my application. I am sagar sardar and a part of FunctionUp uranium cohort.")
 }
 module.exports.logging = output
