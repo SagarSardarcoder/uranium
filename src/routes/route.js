@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+
 const movielist = ["justice league", "the shining", "lord of the rings", "bartman begins","avengers"]
+
 router.get('/movies', function (req, res) {
     
         const result = movielist.toString();
@@ -8,7 +10,7 @@ router.get('/movies', function (req, res) {
 });
 router.get('/movies/:indexNumber',function(req,res){
     let nameOfMovie = ""
-    if(req.params.indexNumber > movielist.length){
+    if(req.params.indexNumber > movielist.length -1){
         nameOfMovie = "use a valid index"
     }else{
            nameOfMovie =  movielist[req.params.indexNumber]
