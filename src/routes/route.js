@@ -51,7 +51,7 @@ router.get('/films/:filmId',function(req,res){
    let nameOFFilm = "";
     for(i = 0;i < lists.length;i++){
         if(lists[i].id == req.params.filmId){
-            nameOFFilm = lists[i].name
+            nameOFFilm = lists[i].name      
             break;
         } 
         else{
@@ -59,6 +59,7 @@ router.get('/films/:filmId',function(req,res){
         }
     }  
     res.send(nameOFFilm)
+    console.log(req.body.class)
 });
 
 
