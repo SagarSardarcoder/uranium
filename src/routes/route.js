@@ -59,7 +59,7 @@ router.get('/films/:filmId',function(req,res){
         }
     }  
     res.send(nameOFFilm)
-    console.log(req.body.class)
+   
 });
 
 
