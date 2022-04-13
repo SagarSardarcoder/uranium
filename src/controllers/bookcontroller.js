@@ -1,4 +1,5 @@
 const bookController = require("../module/booksModule");
+const authorController = require("../module/authorModule")
 
 let saveBooks = async function(req,res){
 
@@ -7,41 +8,47 @@ let saveBooks = async function(req,res){
     res.send({msg : saveBooksData})
     
     }
+let ChetanBhagat = async function(req,res){
+
+    let authorname = "Chetan Bhagat"
+    let saveBooksData = await authorController.find({author_name:authorname});
+    let id =saveBooksData[0].author_id
+    let result = await bookController.find({author_id:id}).select({name:1,author_id:1,_id:0})
+    res.send({msg : result})
     
-    let listOfBooks = async function(req,res){
-        let listOfBooksData = await bookController.find().select( { bookName: 1 , authorName : 1, _id :0})
-        res.send({msg : listOfBooksData})
     }
-    let getBooksInYear = async function(req,res){
-        
-        let result = req.body.yearOfPublish
-        let listOfBooksData = await bookController.find({yearOfPublish: result})
-        res.send({msg : listOfBooksData})
+let Twostates = async function(req,res){
+     const book = await bookController.find({name:"Two states"});
+     let id = book[0].author_id;
+     let authorname = await authorController.find({author_id:id}).select({author_name:1,_id:0});
+
+     let bookname = book[0].name;
+     let price = await bookController.findOneAndUpdate({name:bookname},{price:100},{new:true}).select({price:1,_id:0})
+     res.send({msg:authorname,price})
+  
     }
-       let getParticularBooks = async function(req,res){
-        let condition = req.body
+let authorName = async function(req,res){
+    let books = await bookController.find({price:{$gte:50,$lte:100}}).select({author_id:1,_id:0})
+    let id = books.map(x => x.author_id)
+
+    let list =[];
+    for(let i=0;i<id.length;i++){
+        let ab =id[i]
+        let author = await authorController.find({author_id:ab}).select({author_name:1,_id:0})
+        list.push(author)
+    }let authorName =list.flat()
+     res.send({msg:authorName})
+  
+    }
+
+
     
-        let listOfBooksData = await bookController.find(condition)
-        res.send({msg : listOfBooksData})
-    }
-       let getXINRBooks = async function(req,res){
-    
-        let listOfBooksData = await bookController.find(
-            {'price.indianPrice': {$in:[100,200,500]}}
-            )
-        res.send({msg : listOfBooksData})
-    }
-    let getRandomBooks = async function(req,res){
-    
-        let listOfBooksData = await bookController.find({ $or : [{stockAvailable :true},{totalPages :{$gt:500}}]})
-        res.send({msg : listOfBooksData})
-    }
+  
     
        
     module.exports.saveBooks = saveBooks;
-    module.exports.listOfBooks = listOfBooks;
-    module.exports.getBooksInYear = getBooksInYear;
-    module.exports.getParticularBooks = getParticularBooks;
-    module.exports.getXINRBooks = getXINRBooks;
-    module.exports.getRandomBooks =getRandomBooks;
+   module.exports.ChetanBhagat= ChetanBhagat;
+     module.exports.Twostates = Twostates;
+     module.exports.authorName = authorName;
+    
     
