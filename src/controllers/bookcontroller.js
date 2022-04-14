@@ -23,7 +23,7 @@ let Twostates = async function(req,res){
      let authorname = await authorModel.find({author_id:id}).select({author_name:1,_id:0});
 
      let bookname = book[0].name;
-     let price = await bookModelr.findOneAndUpdate({name:bookname},{price:100},{new:true}).select({price:1,_id:0})
+     let price = await bookModel.findOneAndUpdate({name:bookname},{price:100},{new:true}).select({price:1,_id:0})
      res.send({msg:authorname,price})
   
     }
