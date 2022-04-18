@@ -1,54 +1,64 @@
 const bookModel = require("../module/booksModule");
-const authorModel = require("../module/authorModule")
+const authorModel = require("../module/authorModule");
+const publisherModel = require("../module/publisherModule")
+const mongoose = require('mongoose')
+const isValidObjectId = function (ObjectId) {
+   return mongoose.Types.ObjectId.isValid(ObjectId)
+       }
 
-let saveBooks = async function(req,res){
+let createBooks =async function(req,res){
+ let book = req.body
+    let authorId = book.author
+    let publisherId = book.publisher
 
-    let booksData = req.body;
-    let saveBooksData = await bookModel.create(booksData);
-    res.send({msg : saveBooksData})
-    
-    }
-let ChetanBhagat = async function(req,res){
+ if(!authorId)
+            return res.send({msg:"author ID is required "});
 
-    let authorname = "Chetan Bhagat"
-    let Data = await authorModel.find({author_name:authorname});
-    let id =Data[0].author_id
-    let result = await bookModel.find({author_id:id}).select({name:1,author_id:1,_id:0})
-    res.send({msg : result})
-    
-    }
-let Twostates = async function(req,res){
-     const book = await bookModel.find({name:"Two states"});
-     let id = book[0].author_id;
-     let authorname = await authorModel.find({author_id:id}).select({author_name:1,_id:0});
+  if(!isValidObjectId(authorId)){
+            return res.send({msg:"invalid autherId"})
+         }
+  if(!publisherId) 
+           return res.send({msg:"publisher ID is required"});
 
-     let bookname = book[0].name;
-     let price = await bookModel.findOneAndUpdate({name:bookname},{price:100},{new:true}).select({price:1,_id:0})
-     res.send({msg:authorname,price})
-  
-    }
-let authorName = async function(req,res){
-    let books = await bookModel.find({price:{$gte:50,$lte:100}}).select({author_id:1,_id:0})
-    let id = books.map(x => x.author_id)
+  if(!isValidObjectId(publisherId)){
+            return res.send({msg:"invalid publisherId"})
+         }
 
-    let list =[];
-    for(let i=0;i<id.length;i++){
-        let ab =id[i]
-        let author = await authorModel.find({author_id:ab}).select({author_name:1,_id:0})
-        list.push(author)
-    }let authorName =list.flat()
-     res.send({msg:authorName})
-  
-    }
+      let addBook = await bookModel.create(book);
+         res.send({msg:addBook})
+}
+const bookDetails= async function (req, res) {
+    let books = await bookModel.find().populate("author publisher") 
+    res.send({data: books})
+}
+ 
+const updateByPublisher = async function (req,res){
+   const pub = await publisherModel.find({$and: [{PublisherName:"Penguin"},{PublisherName:"HarperCollins"}]}).select({_id:1})
+   // console.log(pub)
+   for(let i =0; i<pub.length; i++){
+        await bookModel.updateMany({publisher: pub[i]._id}, {isHardCover: true}) 
+   } 
+   res.send({msg:"done"})
+}
+const updateByRating = async function (req,res){
+   const auth = await authorModel.find({rating:{$gt:3.5}}).select({_id:1})
+   //  console.log(auth)
+   for(let i =0; i<auth.length; i++){
+     
+        await bookModel.updateMany({author: auth[i]._id}, { $inc: {price:10}})
+   } 
+   res.send({msg:"done"})
+}
 
 
-    
-  
-    
-       
-    module.exports.saveBooks = saveBooks;
-   module.exports.ChetanBhagat= ChetanBhagat;
-     module.exports.Twostates = Twostates;
-     module.exports.authorName = authorName;
+
+
+module.exports = {
+   createBooks,
+   bookDetails,
+   updateByPublisher,
+   updateByRating
+}
+ 
     
     

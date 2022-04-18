@@ -1,14 +1,18 @@
 const express = require('express');
 const router = express.Router();
-
-const booksControllers = require("../controllers/bookcontroller")
 const authorController = require("../controllers/authorcontroller")
+const publisherControllers = require("../controllers/publishercontroller")
+const booksControllers = require("../controllers/bookcontroller")
 
-router.post("/creatBooks" ,booksControllers.saveBooks);
-router.post("/creatAuthor" ,authorController.saveAuthor);
-router.post("/ChetanBhagat" ,booksControllers.ChetanBhagat);
-router.post("/Twostates" ,booksControllers.Twostates);
-router.post("/authorName" ,booksControllers.authorName);
+
+
+router.post("/creatAuthor" ,authorController.createAuthor);
+router.post("/createPublisher" ,publisherControllers.createPublisher);
+router.post("/creatBooks" ,booksControllers.createBooks);
+router.post("/bookDetails" ,booksControllers.bookDetails);
+router.put("/updateByPublisher" ,booksControllers.updateByPublisher);
+router.put("/updateByRating" ,booksControllers.updateByRating);
+
 
 
 

@@ -1,9 +1,9 @@
 const authorcontroller = require("../module/authorModule")
-let saveAuthor = async function(req,res){
+let createAuthor = async function(req,res){
 
-    let booksData = req.body;
-    let saveBooksData = await authorcontroller.create(booksData);
-    res.send({msg : saveBooksData})
+    let authorData = req.body;
+    let saveAuthorData = await authorcontroller.create(authorData);
+    res.send({msg : saveAuthorData})
     
     }
-    module.exports.saveAuthor =saveAuthor;
+    module.exports.createAuthor =createAuthor;
