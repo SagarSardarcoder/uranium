@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const authorController = require("../controllers/authorcontroller")
-const publisherControllers = require("../controllers/publishercontroller")
-const booksControllers = require("../controllers/bookcontroller")
+const batchController = require("../controllers/batchcontroller")
+const developerControllers = require("../controllers/developercontroller")
 
 
 
-router.post("/creatAuthor" ,authorController.createAuthor);
-router.post("/createPublisher" ,publisherControllers.createPublisher);
-router.post("/creatBooks" ,booksControllers.createBooks);
-router.post("/bookDetails" ,booksControllers.bookDetails);
-router.put("/updateByPublisher" ,booksControllers.updateByPublisher);
-router.put("/updateByRating" ,booksControllers.updateByRating);
+
+router.post("/createbatch" ,batchController.createbatch);
+router.post("/creatDeveloper" ,developerControllers.creatDeveloper);
+router.get("/scholarshipDevelopers",developerControllers.scholarshipDevelopers );
+router.get("/developers",developerControllers.developers );
 
 
 
