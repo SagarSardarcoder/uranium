@@ -1,15 +1,22 @@
 const express = require('express');
 const router = express.Router();
+const UserController= require("../controllers/userController")
+const orderController= require("../controllers/orderController")
+const productController= require("../controllers/productController")
 const middleware = require('../middleware/commonMiddleware')
-const simple = require('../controllers/newController')
+
+
+router.post("/createProduct", productController.createProduct);
+router.post("/createUser",middleware.checkHeader,UserController.createUser);
+router.post("/orderPurchease",middleware.checkHeader,orderController.createOrder);
 
 
 
-router.get("/mid1" ,middleware.firstMid,middleware.secondMid,simple.simpleFunction);
+
+
+ 
 
 
 
 
-
-
-module.exports = router;
+module.exports = router; 

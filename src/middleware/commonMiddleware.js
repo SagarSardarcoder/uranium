@@ -1,20 +1,16 @@
-const firstMid = async function(req,res,next){
-    console.log("this is the first middleware")
-    next()
-   
+const res = require("express/lib/response");
+
+const checkHeader=(req,res,next)=>{
+    let validation = req.headers.isfreeappuser
+    // console.log(req.headers)
+    if(validation){
+    next ();
 }
-const secondMid = async function(req,res,next){
-    console.log("this is the second middleware")
-    next()
-  
+else {
+    res.send({
+        'msg':'The request is missing a mandatory header'
+
+    });
 }
-
-
-
-
-
-
-module.exports= {
-    firstMid,
-    secondMid
 }
+module.exports.checkHeader=checkHeader 
