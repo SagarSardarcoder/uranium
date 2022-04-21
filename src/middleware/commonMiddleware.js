@@ -1,16 +1,18 @@
-const res = require("express/lib/response");
 
-const checkHeader=(req,res,next)=>{
-    let validation = req.headers.isfreeappuser
-    // console.log(req.headers)
-    if(validation){
-    next ();
-}
-else {
-    res.send({
-        'msg':'The request is missing a mandatory header'
+const middl = async function (req, res,next) {
+  let token = req.headers["x-Auth-token"];
+  if (!token) token = req.headers["x-auth-token"];
 
-    });
-}
-}
-module.exports.checkHeader=checkHeader 
+  if (!token) return res.send({ status: false, msg: "token must be present" });
+next()
+ 
+};
+
+
+
+
+
+
+
+
+module.exports.middl=middl

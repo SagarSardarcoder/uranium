@@ -1,22 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const UserController= require("../controllers/userController")
-const orderController= require("../controllers/orderController")
-const productController= require("../controllers/productController")
-const middleware = require('../middleware/commonMiddleware')
+const userController= require("../controllers/userController")
 
-
-router.post("/createProduct", productController.createProduct);
-router.post("/createUser",middleware.checkHeader,UserController.createUser);
-router.post("/orderPurchease",middleware.checkHeader,orderController.createOrder);
+const middleware = require("../middleware/commonMiddleware.js")
 
 
 
+router.post("/user", userController.user  )
 
+router.post("/loginUser", userController.loginUser)
 
- 
+router.get("/users/:userId",middleware.middl, userController.getUserData)
 
+router.put("/users/:userId",middleware.middl, userController.updateUser)
 
+router.delete("/users/:userId",middleware.middl,userController.deleteUser)
 
-
-module.exports = router; 
+module.exports = router;
