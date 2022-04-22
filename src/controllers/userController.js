@@ -44,20 +44,15 @@ const getUserData = async function (req, res) {
 
 const updateUser = async function (req, res) {
   let userId = req.params.userId;
-  let user = await userModel.findById(userId);
+   let userData = req.body;
 
-  if (!user) return res.send("No such user exists"); 
-  
-  let userData = req.body;
   let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData,{new:true});
   res.send({ status: true, data: updatedUser });
 };
 
 const deleteUser = async function(req ,res){
-
-   let userId = req.params.userId
-   if (!user) return res.send("No such user exists"); 
-  
+  let userId = req.params.userId
+ 
    let deletion = await userModel.findOneAndUpdate({_id:userId},{isDeleted:true},{new:true})
    res.send({data:deletion})
 

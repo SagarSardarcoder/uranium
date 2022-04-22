@@ -2,9 +2,14 @@ let jwt = require("jsonwebtoken");
 
 const middl = async function (req, res,next) {
   let token = req.headers["x-Auth-token"];
-  let userId = req.params.userId
-  // console.log(userId)
   if (!token) token = req.headers["x-auth-token"];
+  let userId = req.params.userId
+
+  if(!userId) return res.send({msg:"userId is mandatory field"})
+
+  let user = await userModel.findById(userId);
+  if (!user) return res.send("No such user exists"); 
+  // console.log(userId)
   
   if (!token) return res.send({ status: false, msg: "token must be present" });
   let decodedToken = jwt.verify(token, "functionup-uranium")
