@@ -33,13 +33,8 @@ const loginUser = async function (req, res) {
 };
 
 const getUserData = async function (req, res) {
-  let token = req.headers["x-auth-token"];
  
-  let decodedToken = jwt.verify(token, "functionup-uranium");
-  if (!decodedToken)
-    return res.send({ status: false, msg: "token is invalid" });
-
-  let userId = req.params.userId;
+ let userId = req.params.userId;
   let userDetails = await userModel.findById(userId);
   if (!userDetails)
     return res.send({ status: false, msg: "No such user exists" });
@@ -51,10 +46,8 @@ const updateUser = async function (req, res) {
   let userId = req.params.userId;
   let user = await userModel.findById(userId);
 
-  if (!user) {
-    return res.send("No such user exists");
-  }
-
+  if (!user) return res.send("No such user exists"); 
+  
   let userData = req.body;
   let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData,{new:true});
   res.send({ status: true, data: updatedUser });
@@ -63,6 +56,8 @@ const updateUser = async function (req, res) {
 const deleteUser = async function(req ,res){
 
    let userId = req.params.userId
+   if (!user) return res.send("No such user exists"); 
+  
    let deletion = await userModel.findOneAndUpdate({_id:userId},{isDeleted:true},{new:true})
    res.send({data:deletion})
 
