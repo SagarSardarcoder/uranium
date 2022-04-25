@@ -8,12 +8,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-mongoose.connect("mongodb+srv://Sagar-functionup:radhaswami123@cluster0.7xlsi.mongodb.net/sagarsardar?retryWrites=true&w=majority")
-.then( () => console.log("MongoDb is connected"))
-.catch ( err => console.log(err) )
+// mongoose.connect("mongodb+srv://As_357:oJAKh3z4S39UgaUZ@cluster0.k4tlh.mongodb.net/As_357")
+// .then( () => console.log("MongoDb is connected"))
+// .catch ( err => console.log(err) )
 
 
-app.use('/', route)
+app.use('/', route);
 
 
 app.listen(process.env.PORT || 3000, function () {
